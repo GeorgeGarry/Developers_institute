@@ -1,0 +1,17 @@
+.second{
+    color: blue;
+}
+.li{
+    font-weight: bold;
+    text-transform: uppercase;
+}
+#first-paragraph{
+    background-color: pink;
+    color: white;
+
+}
+#second_paragraph{
+    background-color: lightblue;
+    margin: 20px;
+    padding: 30px;
+}

@@ -1,0 +1,22 @@
+#personal_data{
+    list-style: none;
+    background-color: aqua;
+    border-radius: 15px;
+    border-style:groove;
+}
+
+ol{
+    background-color: blanchedalmond;
+    border-radius: 15px;
+    border-style: groove;
+    border-color: black;
+}
+
+#table_1 table, th, td{
+   border: 1px solid black;
+   
+}
+
+div ~ p{
+    color:brown;
+}
