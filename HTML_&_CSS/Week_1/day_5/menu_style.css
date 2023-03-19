@@ -1,0 +1,120 @@
+nav{
+    position: relative;
+    height: 50px;
+    background-color: rgba(237, 112, 45, 0.89);
+
+}
+h3{
+    position: absolute;
+    left: 600px;
+    
+}
+#main_container{
+    position: relative;
+    background-color: darksalmon;
+    height: 600px;
+    
+}
+.menu_items{
+    position: absolute;
+    
+}
+img{
+    height: 150px;
+}
+#items_container{
+    position: relative;
+}
+ul{
+    display: inline;
+    position: absolute;
+    list-style: none;
+    position: relative;
+}
+.sale_conteiner{
+    position: absolute;
+    
+}
+/* #product_1,#product_2,#product_3,#product_4{ */
+    .sale_container{
+    float: left;
+    height: 300px;
+    width: 23%;
+    margin-left: 10px;
+    margin-top: 60px;
+    background-size:cover;
+
+
+}
+
+
+
+#product_1{
+    margin-left: 10px;
+    background-image:url(pictures/blueberry.jpeg);
+    
+}
+#product_2{
+    background-image:url(pictures/lemon.jpeg);
+}
+#product_3{
+    background-image:url(pictures/tiramisu.jpeg);
+    
+}
+#product_4{
+    background-image:url(pictures/yogurt.jpeg);
+   
+}
+
+img{
+    position: absolute;
+    height: 60px;
+}
+
+.btn{
+    position: absolute;
+    top: 330px;
+    margin: 5px;
+    font-weight: bold;
+}
+.btn:hover{
+    background-color: rgba(71, 71, 216, 0.349);
+    height: 20px;
+
+}
+.price{
+    position: absolute;
+    top: 350px;
+    background-color:rgba(187, 228, 149, 0.425);
+    margin-left: 80px;
+    
+}
+.price:hover{
+    font-size: 25px;
+}
+
+
+
+
+.old_price{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-decoration: line-through;
+    color: grey;
+
+}
+.item_name{
+    position: absolute;
+    top: 290px;
+    margin-left: 50px;
+    color: crimson;
+    font-weight: bold;
+    text-align: center;
+}
+#vegan{
+    right: 77px;
+}
+.sale_container:hover{
+    border: 3px groove rgb(40, 66, 213);
+}
+
+

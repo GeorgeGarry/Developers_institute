@@ -1,0 +1,112 @@
+body{
+    background-color: #87C0F4;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    width: 100%;
+    
+}
+ul{
+    list-style: inside;
+}
+/* positioning absolute*/
+h2,#contact_list,#job_title,#profile_picture,#experience,#education,#perconal_info,#tech_skills,#languages,.btn{
+    position:absolute;
+    
+}
+/* positioning relative */
+#head_page,#cv_body{
+    position: relative;
+}
+
+.icons{
+    height: 30px;
+    vertical-align: middle;
+}
+#job_title{
+    right:200px ;
+}
+#contact_list{
+    left: 10px;
+    top: 70px;
+    vertical-align:bottom;
+}
+.my_contacts{
+    display: block;
+}
+#profile_picture{
+    
+    height: 200px;
+    right: 3px;
+    vertical-align: middle;
+}
+#head_page{
+    padding: 20px;
+    width: auto;
+    height: 220px;
+    display: block;
+    background-color:  #58A7F0;
+    
+}
+#cv_body{
+    /* background-color: antiquewhite; to delete */
+
+    height:1000px;
+
+}
+/* #perconal_info{
+    right: 180px;
+    top: 80px;
+    text-align: right;
+    list-style:none;
+} */
+#experience{
+    right: 10px;
+
+
+}
+#jobs,#schools{
+    
+    width: 500px;
+}
+.job_title{
+    font-weight: bold;
+    font-style: italic;
+    list-style: none;
+}
+
+
+#education{
+    width: 500px;
+}
+
+
+#tech_skills{
+    top: 250px;
+    width: 500px;
+}
+#projects{
+    position: absolute;
+    top: 450px;
+    /* left:40px;   why do I have to add this? */
+
+}
+#languages{
+    top: 600px;
+}
+.banner{
+    text-align: center;
+    font-weight: bold;
+}
+.btn {
+    background-color: DodgerBlue;
+    border: none;
+    color: white;
+    padding: 12px 30px;
+    cursor: pointer;
+    font-size: 20px;
+    top: 650px;
+    right: 200px;
+  }
+  
+  .btn:hover {
+    background-color: RoyalBlue;
+  }

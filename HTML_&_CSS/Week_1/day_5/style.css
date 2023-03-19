@@ -1,0 +1,27 @@
+
+#nav_bar_main{
+    font-weight: bold;
+    position: relative;
+    height: 50px;
+    background-color: darksalmon;
+}
+#jar_icon{
+    position: absolute;
+    top: 14px;
+    left: 10px;
+    color:black;
+
+}
+
+#nav_bar{
+    position: absolute;
+    display: inline;
+    right: 10px;
+
+}
+.nav_menu{
+    display: inline;
+}
+footer{
+    /* float; */
+}
