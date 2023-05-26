@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <label for="">Latitude and longitude city 1</label>
+        <input type="text" placeholder="latitude" class="lat" value="48.864716">
+        <input type="text" placeholder="longitude" class="lon" value="2.349014">
+        <br>
+        <label for="">Latitude and longtitute city 2</label>
+        <input type="text" placeholder="latitude" class="lat" value="40.730610">
+        <input type="text" placeholder="longitude" class="lon" value="-73.935242">
+        <br>
+        <input type="button" value="Submit" onclick="fetch_sunrise()">
+    </form>
+    <div id="cities_sunrise" style="display: flex;">
+
+    </div>
+    <script src="promises_DC.js"></script>
+</body>
+</html>
