@@ -24,4 +24,5 @@ xhr_2.onload = () =>{
     console.log(JSON.parse(xhr_2.response));
 }
 xhr_2.send()
+// Exercise 2 : Giphy API               END
 
