@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="container">
+        <h3></h3>
+        <form action="">
+            <label for="">Choose currency and ammount</label>
+            <select name="currency" id="currency_choice"></select>
+            <input type="number" name="" id="money_give"  min="0" value="1">
+            <br>
+            <label for="">Choose currency you need</label>
+            <select name="currency" id="currency_outcome_choice"></select>
+            <p id="money_recieve"></p>
+            <br>
+            <input type="button" value="Convert" onclick="convert_cur()">
+            <button type="button" id="reverse" onclick="reverse_convert()">Reverse the result</button>
+        </form>
+    </div>
+
+
+
+    <script src="currency_converter_DC.js"></script>
+</body>
+</html>
