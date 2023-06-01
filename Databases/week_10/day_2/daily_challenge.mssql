@@ -1,0 +1,10 @@
+select * from actor
+-- 1. Count how many actors are in the table.
+select count(1) from actor
+-- 2. Try to add a new actor with some blank fields. What do you think the outcome will be ?
+	-- should be an error cuz columns are "not null"
+insert into actor(first_name)
+values('Jack')
+	--should be working only if all the "not null fields" are filled
+insert into actor(first_name,last_name)
+values('Jack','Samurai')
