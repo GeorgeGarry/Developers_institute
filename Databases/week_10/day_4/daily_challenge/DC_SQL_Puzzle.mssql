@@ -1,0 +1,47 @@
+CREATE TABLE FirstTab (
+     id integer, 
+     name VARCHAR(10)
+);
+drop table SecondTab
+INSERT INTO FirstTab VALUES
+(5,'Pawan'),
+(6,'Sharlee'),
+(7,'Krish'),
+(NULL,'Avtaar');
+
+SELECT * FROM FirstTab;
+
+CREATE TABLE SecondTab (
+    id integer 
+);
+
+INSERT INTO SecondTab VALUES
+(5),
+(NULL);
+
+
+SELECT * FROM SecondTab;
+SELECT * FROM FirstTab;
+
+
+-- Q1. What will be the OUTPUT of the following statement?
+SELECT COUNT(*) 
+    FROM FirstTab AS ft WHERE ft.id NOT IN ( SELECT id FROM SecondTab WHERE id IS NULL )
+-- 	A: It'll be 0 because you should use IS instead of IN (NOT IN) to compare null
+
+-- Q2. What will be the OUTPUT of the following statement?
+    SELECT COUNT(*) 
+    FROM FirstTab AS ft WHERE ft.id NOT IN ( SELECT id FROM SecondTab WHERE id = 5 )
+-- A: Will be 2, we have ID's [5,6,7,null] and it can't compare null
+
+-- Q3. What will be the OUTPUT of the following statement?
+SELECT COUNT(*) 
+    FROM FirstTab AS ft WHERE ft.id  IN (SELECT id FROM SecondTab)
+-- A: I thought it's gonna be 2 for the same reason as previous, because the inner query result is (5,null). but it says 0
+-- 				🟥 I'd like to get some exlpanations on this one please, cuz even in the solution video 🟥
+-- 				🟥	there's an answer 0 if we use NOT IN. However when I try only IN - it returns 1 🟥
+
+-- Q4. What will be the OUTPUT of the following statement?
+ SELECT COUNT(*) 
+    FROM FirstTab AS ft WHERE ft.id NOT IN ( SELECT id FROM SecondTab WHERE id IS NOT NULL )
+-- A: Here should be 2, because the result of the inner query is 5 (same result as in question 2)
