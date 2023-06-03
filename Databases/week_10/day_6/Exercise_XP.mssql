@@ -1,0 +1,139 @@
+--  🌟 Exercise 1: DVD Rental
+-- Get a list of all film languages.
+	SELECT * from language;
+-- Get a list of all films joined with their languages – select the following details : 
+-- film title, description, and language name. Try your query with different joins:
+-- Get all films, even if they don’t have languages.
+-- Get all languages, even if there are no films in those languages.
+	SELECT f.title, f.description, l.name FROM film AS f
+	JOIN language AS l ON f.language_id = l.language_id;
+-- Create a new table called new_film with the following columns : id, name. Add some new films to the table.
+	CREATE TABLE new_film(
+		film_id serial PRIMARY KEY,
+		name varchar(100) NOT NULL
+	);
+	INSERT INTO new_film(name)
+	VALUES ('Pulp Fiction'),
+		   ('Star Wars'),
+			('Snatch'),
+			('Ex Machina');
+			
+-- Create a new table called customer_review, which will contain film reviews that customers will make.
+-- Think about the DELETE constraint: if a film is deleted, its review should be automatically deleted.
+-- It should have the following columns:
+-- review_id – a primary key, non null, auto-increment.
+-- film_id – references the new_film table. The film that is being reviewed.
+-- language_id – references the language table. What language the review is in.
+-- title – the title of the review.
+-- score – the rating of the review (1-10).
+-- review_text – the text of the review. No limit on the length.
+-- last_update – when the review was last updated.
+	CREATE TABLE customer_review (
+		review_id serial PRIMARY KEY,
+		film_id int REFERENCES new_film(film_id) ON DELETE CASCADE,
+		language_id int REFERENCES language(language_id),
+		title varchar(255),
+		score int CHECK (score BETWEEN 1 AND 10),
+		review_text text,
+		last_update timestamp DEFAULT CURRENT_TIMESTAMP
+	);
+	
+-- Add 2 movie reviews. Make sure you link them to valid objects in the other tables.	
+drop table customer_review
+INSERT INTO customer_review (film_id, language_id, title, score, review_text)
+VALUES(3,2,'Great movie!', 9, 'Awesome early Tarantino`s movie about gangsters'),
+(2,1,'Epic!',10,'Star Wars is the best');
+
+SELECT * FROM customer_review;
+
+-- Delete a film that has a review from the new_film table, what happens to the customer_review table?
+DELETE FROM new_film
+WHERE film_id = 2;
+SELECT * FROM customer_review;
+-- A: The row with the review is deleted automatically as well
+--  🌟 Exercise 1: DVD Rental											END
+
+
+-- 🌟 Exercise 2 : DVD Rental
+-- Use UPDATE to change the language of some films. Make sure that you use valid languages.
+	SELECT * FROM film
+	WHERE language_id = 3;
+	
+	UPDATE film
+		SET language_id = 3
+		WHERE rental_rate < 3;
+		
+-- Which foreign keys (references) are defined for the customer table? How does this affect the way in which we INSERT into the customer table?
+-- 	🟢 A: those are store_id and address_id. We need to make sure that the data we insert in those columns has corresponding ID in other tables 
+	SELECT * FROM customer;
+	
+-- We created a new table called customer_review. Drop this table. Is this an easy step, or does it need extra checking?
+	DROP TABLE customer_review;
+-- 	🟢 A:That's an easy step, because we have no other tables that rely on any data from customer_review.
+
+-- Find out how many rentals are still outstanding (ie. have not been returned to the store yet).
+	SELECT COUNT(1) FROM rental
+	WHERE return_date IS null;
+	
+-- Find the 30 most expensive movies which are outstanding (ie. have not been returned to the store yet)
+	SELECT * FROM (SELECT * FROM rental
+					WHERE return_date IS null) AS r
+		JOIN inventory AS i
+			ON i.inventory_id = r.inventory_id
+		JOIN film AS f
+			ON f.film_id = i.film_id
+		ORDER BY f.replacement_cost DESC
+			LIMIT 30;
+			
+-- Your friend is at the store, and decides to rent a movie. He knows he wants to see 4 movies, 
+-- but he can’t remember their names. Can you help him find which movies he wants to rent?
+	-- The 1st film : The film is about a sumo wrestler, and one of the actors is Penelope Monroe.
+		SELECT * FROM film AS f
+		JOIN film_actor AS f_a 
+			ON f.film_id = f_a.film_id
+		JOIN actor AS a
+			ON  a.actor_id = f_a.actor_id
+				WHERE a.first_name = 'Penelope' AND a.last_name = 'Monroe' AND f.description LIKE '%Sumo%';
+	-- The 2nd film : A short documentary (less than 1 hour long), rated “R”.
+		SELECT * FROM film AS f
+		JOIN film_category AS f_c
+			ON f_c.film_id = f.film_id
+		JOIN category AS c
+			ON c.category_id = f_c.category_id
+				WHERE c.name = 'Documentary' AND
+						f.length < 60 AND
+						f.rating = 'R';
+	-- The 3rd film : A film that his friend Matthew Mahan rented. He paid over $4.00 for the rental, 
+		-- and he returned it between the 28th of July and the 1st of August, 2005.
+		SELECT * FROM film AS f
+		JOIN inventory AS i
+			ON f.film_id = i.film_id
+		JOIN rental AS r
+			ON r.inventory_id = i.inventory_id
+		JOIN payment AS p
+			ON p.rental_id = r.rental_id
+		JOIN customer AS c
+			ON c.customer_id = p.customer_id
+				WHERE c.first_name = 'Matthew' AND 
+						c.last_name = 'Mahan' AND
+						p.amount > 4 AND
+						r.return_date BETWEEN '2005-06-28' AND '2005-08-01';
+-- 		🟢 A: It seems like there are 3 films that match all the descriptions given in the task
+
+
+	-- The 4th film : His friend Matthew Mahan watched this film, as well. It had the word “boat” in the title or description, 
+		-- and it looked like it was a very expensive DVD to replace.
+		
+			🟢	select * from customer where first_name = 'Matthew'  -- =323  since we already know Matthew's ID from the previous task
+		
+		SELECT * FROM film AS f
+		JOIN inventory AS i
+			ON i.film_id = f.film_id
+		JOIN rental AS r
+			ON r.inventory_id = i.inventory_id
+		WHERE r.customer_id = 323 AND (f.title LIKE '%Boat%' OR f.description LIKE '%Boat%')
+		ORDER BY f.replacement_cost DESC
+		LIMIT 1; 
+			-- 🟢 The task says "it was a very expensive DVD to replace", so I assume we're looking for the most expencive one
+		
+		
