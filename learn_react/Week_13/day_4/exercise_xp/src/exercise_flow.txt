@@ -1,0 +1,326 @@
+Exercise 1 : Car And Components
+Instructions
+            Part I : A Car Component
+    In App.js create an object const carinfo = {name: "Ford", model: "Mustang"};
+    In your React app create a new folder in the src path, name it Components. 
+    It should contain a Class Component named Car.js.
+    In the Car.js component render a header with the carInfo model, for example This car is <model>.
+    Import the Car.js component to the App.js.
+
+                    🟢App.js
+import Car from './Components/Car.js';
+function App() {
+  const carinfo = {name: "Ford", model: "Mustang"};
+  return (
+    <div className="App">
+      <header className="App-header">
+       <Car model={carinfo.model}/>
+      </header>
+    </div>
+  );
+}
+export default App;
+
+                    🟢Car.js
+import React from "react"
+class Car extends React.Component {
+    constructor (props) {
+        super(props)
+    }
+
+    render() {
+      return (
+        <div>
+            <h2>This car is {this.props.model} </h2>
+        </div>
+      )
+    }
+  }
+export default Car
+
+🟥Part I : A Car Component                    🟥END🟥
+
+
+
+Part II : A constructor function
+    Create a constructor function in the Car component, and add a color property in the state.
+    Display the color property in the render() method, for example This car is <color> <model>.
+
+                                🟢Car.js
+class Car extends React.Component {
+    constructor (props) {
+        super(props);
+        this.state = {
+            color:"blue"
+        }
+    }
+    render() {
+      return (
+        <div>
+            <h2>This car is a {this.state.color} {this.props.model} </h2>
+        </div>
+      )
+    }
+  }
+🟥Part II : A constructor function             🟥END🟥
+
+
+Part III : Garage
+    Create another component inside your Components folder, called Garage.js.
+    Use an attribute to pass a size to the Garage component, <Garage size="small" />.
+    Use the Garage component inside the Car component and pass the size ‘small’. 
+    The Garage component should render Who lives in my <size> Garage?
+
+                        🟢Garage.js
+const Garage = (props) =>{
+    return(
+        <h2>Who lives in my {props.size} Garage</h2>
+    )
+}
+export default Garage
+
+                    🟢Car.js
+import React from "react"
+import Garage from "./Garage";
+class Car extends React.Component {
+    constructor (props) {
+        super(props);
+        this.state = {
+            color:"blue"
+        }
+    }
+    render() {
+      return (
+        <div>
+            <h2>This car is a {this.state.color} {this.props.model} </h2>
+            <Garage size="small"/>
+        </div>
+      )
+    }
+  }
+export default Car
+🟥Part III : Garage                        🟥END🟥
+🟥🟥🟥Exercise 1 : Car And Components                 🟥END🟥
+
+
+
+Exercise 2 : Events
+Instructions
+Part I:
+    Create a new Class component named Events. 
+    Create an arrow function called clickMe. It should alert the string ‘I was clicked’.
+    In the render() method, create a button that when clicked on, calls the clickMe function.
+    Tip: Use event handler.
+    Where should you create the clickMe function ?
+
+
+                            🟢Events.js
+import React from "react"
+class Event extends React.Component {
+    constructor (props) {
+        super(props);
+    }
+    render() {
+        const event_handler = (message) =>{
+            alert(message)
+        }
+      return (
+        <div>
+           <button onClick={() => event_handler("I was clicked")}>Click Me!</button>
+        </div>
+      )
+    }
+  }
+export default Event
+🟥Part I                                  🟥END🟥
+
+
+Part II:
+    In the render() method of the Events Class component, 
+    create an input tag that has an onkeydown event handler, 
+    that listens to a function called handleKeyDown.
+
+    When you type something in the input field and press the ‘Enter key’, 
+    the handleKeyDown function will check if the ‘Enter key’ was pressed 
+    and will alert a message with the input text value:
+
+
+                        🟢Events.js
+class Event extends React.Component {
+    constructor (props) {
+        super(props);
+    }
+    
+    render() {
+        const event_handler = (message) =>{
+            alert(message);
+        }
+        const handle_keyDown = (e) =>{
+            if (e.key == "Enter"){
+                alert(e.target.value)
+            }
+        }
+      return (
+        <div>
+           <button onClick={() => event_handler("I was clicked")}>Click Me!</button>
+           <input onKeyDown={(e)=>handle_keyDown(e)}/>
+        </div>
+      )
+    }
+  }
+export default Event
+🟥Part II:                            🟥END🟥
+
+
+Part III:
+    In the Events Class component, declare a property in the state object 
+    named isToggleOn and set it to true.
+
+    In the render() method, create a button that has an onClick event 
+    that will switch the state property between ‘ON’ and ‘OFF’
+
+    Create a function that will be called by the onClick event handler. 
+    In the function you should toggle the value of the isToggleOn property.
+
+                        🟢Events.js
+
+const toggleHandler = () => {
+            this.setState(prevState => ({
+                isToggleOn: !prevState.isToggleOn
+            }));
+          };
+
+<button onClick={() => toggleHandler()}>
+            {this.state.isToggleOn ? "ON" : "Off"}
+           </button>
+🟥Part III:                               🟥END🟥
+🟥🟥🟥Exercise 2 : Events                       🟥END🟥
+
+Exercise 3 : Phone And Components
+Instructions
+    Part I : Phone
+    Create a new Class Component named Phone. Use constructor, super(), 
+    and a state object with the following properties:
+                this.state = {
+                    brand: "Samsung",
+                    model: "Galaxy S20",
+                    color: "black",
+                    year: 2020
+                };
+    In the render method of the Phone component, display the values of the state properties. 
+    Tip: this.state.propertyname
+    Import the Phone component and display it in your App.js.
+
+
+                                🟢Phone.js 
+import React from "react";
+
+class Phone extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            brand: "Samsung",
+            model: "Galaxy S20",
+            color: "black",
+            year: 2020
+        };
+    }  
+    render(){
+        return(
+            <div>
+                <h2>My phone is a {this.state.brand}</h2>
+                <h3>It is a {this.state.color} {this.state.model} from {this.state.year}</h3>
+            </div>
+        )
+    }
+} 
+
+export default Phone
+🟥Part I : Phone                       🟥END🟥
+
+Part II : Change the Phone
+    In the Phone component create a function named changeColor that updates the color property to ‘blue’
+    In the render() method of the Phone component, add a button with an onClick event 
+    that will call the changeColor function to change the color property.
+
+                            🟢Phone.js 
+import React from "react";
+class Phone extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            brand: "Samsung",
+            model: "Galaxy S20",
+            color: "black",
+            year: 2020
+        };
+    }  
+    render(){
+        const change_color = () =>{
+            this.setState({color:"blue"})
+        }
+        return(
+            <div>
+                <h2>My phone is a {this.state.brand}</h2>
+                <h3>It is a {this.state.color} {this.state.model} from {this.state.year}</h3>
+                <button onClick={()=>change_color()}>Change color to blue</button>
+            </div>
+        )
+    }
+} 
+export default Phone
+🟥Part II : Change the Phone                          🟥END🟥
+🟥🟥🟥Exercise 3 : Phone And Components                 🟥END🟥
+
+
+Exercise 4 : ComponentDidMount
+    Create a new Class Component named Color. The state object of this component 
+    contains a property favoriteColor which value is “red”.
+
+                            🟢Color.js
+import React from "react"
+class Color extends React.Component{
+    constructor(){
+        super();
+        this.state={
+            favoriteColor:"red"
+        }
+    }
+    render(){
+        return(
+            <div>
+                <h1>My favorite color is {this.state.favoriteColor}</h1>
+            </div>
+        )
+    }
+}
+export default Color
+
+    Use the componentDidMount() method to call a timeout function, that changes 
+    the state of the favoriteColor property to “yellow” after 5 seconds.
+
+                        🟢Color.js
+     componentDidMount() {
+        setTimeout(() => {
+            this.setState({favoriteColor:"yellow"})
+          }, 5000);
+    }
+
+Note: The render() method is called when a component gets updated. 
+It re-renders the DOM, with the new changes.
+Create a button that when clicked on, calls a function that changes 
+the value of the favoriteColor property to “blue”.
+
+                        🟢Color.js
+    render(){
+        const turn_blue = () =>{
+            this.setState({favoriteColor:"blue"})
+        }
+        return(
+            <div>
+                <h1>My favorite color is {this.state.favoriteColor}</h1>
+                <button onClick={() => turn_blue()}>Make it blue</button>
+            </div>
+        )
+    }
+🟥🟥🟥Exercise 4 : ComponentDidMount              🟥END🟥
