@@ -1,0 +1,222 @@
+Exercise 1 : React Error Boundary Simulation
+    In the App.js file create a class component named BuggyCounter.
+    This component :
+    will hold a counter property in the state. The counter value starts at 0.
+    will render the counter. Every time the users clicks on it, the function handleClick() 
+    will be called, and add +1 to the counter property.
+    If the counter reaches 5, you will throw an error ‘I crashed!’ 
+
+                        🟢App.js
+class BuggyCounter extends React.Component{
+  constructor(){
+    super();
+    this.state = {
+      counter:0 
+    }
+  }
+  componentDidUpdate() {
+    if (this.state.counter === 5) {
+      throw new Error('I crashed!');
+    }
+  }
+  render(){
+    const handle_click = () =>{
+      this.setState({counter:this.state.counter+1})
+      
+    }
+    return(
+      <div>
+        <button onClick={()=>{handle_click()}}>Counter  {this.state.counter}</button>
+      </div>
+    )
+  }
+}
+    In another Javascript file, create the ErrorBoundary class component, 
+    it will hold an error property in the state. The error value is set to null.
+    Use the componentDidCatch() method to set the value of the error property.
+    Render an error message with some details. (We will use this component to wrap the 
+    BuggyCounter component in our below simulations)
+
+                        🟢ErrorBoundary.js
+import React from 'react';
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null,
+      errorInfo: null
+    };
+  }
+  componentDidCatch(error, errorInfo) {
+    this.setState({
+      error: error,
+      errorInfo: errorInfo
+    });
+  }
+  render() {
+    if (this.state.error) {
+      return (
+        <div>
+          <h2>Error Encountered:</h2>
+          <details style={{ whiteSpace: 'pre-wrap' }}>
+            {this.state.error && this.state.error.toString()}
+            <br />
+            {this.state.errorInfo.componentStack}
+          </details>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+export default ErrorBoundary;
+
+
+
+                For all the simulations:
+
+                🟢App.js
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h3>2 counters in 1 error wrapper</h3>
+        <ErrorBoundary>
+          <BuggyCounter />
+          <BuggyCounter />
+        </ErrorBoundary>
+        <h3>2 counters, each has an error wrapper</h3>
+        <ErrorBoundary>
+          <BuggyCounter />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <BuggyCounter />
+        </ErrorBoundary>
+        <h3>no error wrappers</h3>
+        <BuggyCounter />
+      </header>
+    </div>
+  );
+}
+🟥🟥🟥Exercise 1 : React Error Boundary Simulation                🟥END🟥
+
+Exercise 2 : Lifecycle
+
+  Each component in React has a lifecycle which you can monitor and 
+  manipulate during its three main phases. The three phases are: Mounting, Updating, and Unmounting.
+  Today we are going to work on the Updating phase:
+  The next phase in the lifecycle is when a component is updated. 
+  A component is updated whenever there is a change in the component’s state or props.
+  React has five built-in methods that gets called, in this order, when a component is updated:
+
+    getDerivedStateFromProps()
+
+    shouldComponentUpdate(): in this method you can return a Boolean value that specifies whether 
+      React should continue with the rendering or not. The default value is true.
+
+    render()
+
+    getSnapshotBeforeUpdate(): in this method you have access to the props and state before the update, 
+      meaning that even after the update, you can check what the values were before the update. 
+      If the getSnapshotBeforeUpdate() method is present, you should also include the 
+      componentDidUpdate() method, otherwise you will get an error.
+
+    componentDidUpdate(): this method is called after the component is updated in the DOM.
+
+
+
+Part I : shouldComponentUpdate
+  Use the shouldComponentUpdate() method and set it to return true. 
+  If you set the return value of the shouldComponentUpdate() method to false, 
+  you won’t be able to change the value of the favoriteColor property to “blue”, 
+  (even after clicking on the button)
+
+                          🟢./components/Color.js
+ class Color extends React.Component{
+    constructor(){
+        super();
+        this.state={
+            favoriteColor:"red"
+        }
+    }
+    shouldComponentUpdate(favoriteColor){
+        return true
+    }
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({favoriteColor:"yellow"})
+          }, 5000);
+    }
+    render(){
+        const turn_blue = () =>{
+            this.setState({favoriteColor:"blue"})
+        }
+        return(
+            <div>
+                <h1>My favorite color is {this.state.favoriteColor}</h1>
+                <button onClick={() => turn_blue()}>Make it blue</button>
+            </div>
+        )
+    }
+}
+🟥Part I : shouldComponentUpdate          🟥END🟥
+
+Part II: componentDidUpdate
+  In the componentDidUpdate method, add a console.log("after update"). 
+  Open the Dev Tools, to see when this message is displayed.
+      
+                          🟢./components/Color.js
+   componentDidUpdate(favoriteColor){
+        console.log("after update");
+    }
+                      💡It will display right adter component updates
+🟥Part II: componentDidUpdate             🟥END🟥
+
+    
+Part III : getSnapshotBeforeUpdate
+  Use the getSnapshotBeforeUpdate() method, add a console.log("in getSnapshotBeforeUpdate"). 
+  Open the Dev Tools, to see when this message is displayed.
+                        🟢./components/Color.js
+  getSnapshotBeforeUpdate(){
+        console.log("in getSnapshotBeforeUpdate")
+    }
+                      💡As far as I got it the sequence is following:
+      timer -> getSnapshotBeforeUpdate() -> {the actual update itself} -> componentDidUpdate()
+🟥Part III : getSnapshotBeforeUpdate         🟥END🟥
+🟥🟥🟥Exercise 2 : Lifecycle                      🟥END🟥
+
+
+Exercise 3 : Lifecycle #2
+  Using the previous exercise (Exercise 2 : Lifecycle)
+  Add a new property named show to the state object. Set the value of this property to true.
+
+  Add a Class component named Child to the same file. This new component will render a 
+  ‘Hello World!’ message in a header tag. 
+
+  This new component uses the componentWillUnmount method to alert an unmounted message.
+
+  Render the Child component in your App, only if the value of the show property is set to true.
+
+  Create a “Delete” button that when clicked on (ie. onClick) will call a function that updates the 
+  value of the show property to false.
+
+                        🟢./components/Color.js
+
+class Child extends React.Component{
+    componentWillUnmount(){
+        alert("This component is about to be unmounted")
+    }
+    render(){
+        return(
+            <h1>Hello World</h1>
+        )
+    }
+}
+
+const delete_component = () =>{
+          this.setState({show:false})
+      }
+
+{this.state.show ? <Child/> : null}
+<button onClick={() => delete_component()}>Delete</button>
+🟥🟥🟥Exercise 3 : Lifecycle #2                   🟥END🟥
